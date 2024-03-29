@@ -1,0 +1,38 @@
+POST http://localhost:8090/customer/v1/create-account
+Content-Type: application/json
+Content-Length: 112
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "accountId": 0,
+  "userId": 2,
+  "accountType": "SAVINGS",
+  "balance": 0,
+  "accountNumber": "1323468456"
+}
+
+<> 2024-03-13T160701.500.json
+
+###
+
+POST http://localhost:8090/customer/v1/create-account
+Content-Type: application/json
+Content-Length: 102
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.10)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "accountId": 0,
+  "userId": 0,
+  "accountType": "SAVINGS",
+  "balance": 0,
+  "accountNumber": ""
+}
+
+<> 2024-03-13T160616.500.json
+
+###
+

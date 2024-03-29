@@ -1,0 +1,58 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  security:
+    oauth2:
+      client:
+        provider:
+          spring:
+            issuer-uri: http://localhost:8088
+        registration:
+          reg-client:
+            provider: spring
+            client-id: client
+            client-secret: "secret"
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
+            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/reg-client
+            scope: openid, profile
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/users/**
+          filters:
+            - TokenRelay=
+        - id: account-service
+          uri: lb://currency-and-account-service
+          predicates:
+            - Path=/account/**
+          filters:
+            - TokenRelay=
+        - id: currency-service
+          uri: lb://currency-and-account-service
+          predicates:
+            - Path=/currency/**
+          filters:
+            - TokenRelay=
+        - id: transaction-service
+          uri: lb://transaction-service
+          predicates:
+            - Path=/transaction/**
+          filters:
+            - TokenRelay=
+        - id:  angular
+          uri: http://localhost:4200
+          predicates:
+            - Path=/**
+          filters:
+            - TokenRelay=
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

@@ -1,0 +1,81 @@
+<div class="header-table" nz-flex [nzJustify]="'flex-end'">
+  <button nz-button nzType="primary" (click)="showModalCreate()">Create Account</button>
+</div>
+<nz-table #sortTable [nzData]="listOfData">
+  <thead>
+  <tr>
+    <th [nzAlign]="'center'">ID</th>
+    <th [nzAlign]="'center'">Image</th>
+    <th [nzAlign]="'center'">Name</th>
+    <th [nzAlign]="'center'">Account Number</th>
+    <th [nzAlign]="'center'">Create At</th>
+    <th [nzAlign]="'center'">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of sortTable.data; let i = index" >
+    <td [nzAlign]="'center'" >{{ i + 1 }}</td>
+    <td [nzAlign]="'center'">
+      <img
+        nz-image
+        width="50px"
+        height="50px"
+        nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        alt=""
+      />
+    </td>
+    <td [nzAlign]="'left'">{{ data.name }}</td>
+    <td [nzAlign]="'center'">{{ data.numberOfSong }}</td>
+    <td [nzAlign]="'center'">{{ data.createAt }}</td>
+    <td [nzAlign]="'center'">
+      <a>Edit</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a>Detail</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a (click)="showModal()">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Modal Title"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="isOkLoading"
+>
+  <p *nzModalContent>Are you sure delete?</p>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleCreate"
+  nzTitle="Modal Title"
+  (nzOnCancel)="handleCancelCreate()"
+  (nzOnOk)="handleOkCreate()"
+  [nzOkLoading]="isOkLoading"
+>
+  <form *nzModalContent nz-form [formGroup]="validateForm"  (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzFor="email">E-mail</nz-form-label>
+      <nz-form-control [nzSm]="25" nzErrorTip="The input is not valid E-mail!">
+        <input nz-input formControlName="email" id="email" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="5" nzFor="name">Name</nz-form-label>
+      <nz-form-control [nzSm]="25">
+        <nz-select nzMode="multiple" formControlName="name" id="name" [(ngModel)]="listOfSelectedValue">
+          <nz-option
+            *ngFor="let option of listOfOption"
+            [nzLabel]="option"
+            [nzValue]="option"
+            [nzHide]="!isNotSelected(option)"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+
+

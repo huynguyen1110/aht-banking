@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: currency-and-account-service
+  main:
+    allow-bean-definition-overriding: true
+
+  cloud:
+    config:
+      label: v1.0.3
+      override-system-properties: false
+      allow-override: true
+      override-none: true
+      enabled: true
+  config:
+    import: configserver:http://localhost:9005
